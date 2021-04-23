@@ -11,8 +11,8 @@ RUN npm install --production
 
 
 # ffmpeg
-RUN apk add  --no-cache ffmpeg
-RUN ffmpeg
+RUN apk add --no-cache ffmpeg
+RUN /usr/bin/ffmpeg -h
 
 COPY . .
 

@@ -7,37 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-
-    timeout-minutes: 10
-
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: [12.x]
-
-    steps:
-    - uses: actions/checkout@v1 # checkout latest commit
-    - name: Use Node.js ${{ matrix.node-version }} # set up Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Install Dependencies # runs the npm ci command to install all dependencies
-      run: npm ci
-      env:
-        CI: "true"
-    - name: Lint Script # lints the code to find any errors
-      run: npm run lint
-      env:
-        CI: "true"
-    - name: Build Aisha # build code
-      run: npm run build
-      env:
-        CI: "true"
-
   dockerize:
-    needs: [test]
     runs-on: ubuntu-latest
     steps:
       -

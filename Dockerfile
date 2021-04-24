@@ -6,13 +6,7 @@ RUN mkdir /app
 WORKDIR /app
 
 COPY package.json package-lock.json ./
-
 RUN npm install --production
-
-
-# ffmpeg
-RUN apk add --no-cache ffmpeg
-RUN /usr/bin/ffmpeg -h
 
 COPY . .
 

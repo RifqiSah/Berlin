@@ -50,7 +50,7 @@ async function checkServer() {
                 db.get('servers').find({ name: server.name }).assign({ status }).write();
                 console.log('> Sending notification ...');
 
-                axios.get(`https://alriftech.com/api/v2/bot/aisha/server_update/${server.name.toLowerCase()}`)
+                axios.get(`${process.env.AISHA_API}/server_update/${server.name.toLowerCase()}`)
                     .then((res) => true );
             }
 

@@ -1,4 +1,5 @@
 const { Socket } = require('net');
+const axios = require('axios');
 
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
@@ -45,12 +46,12 @@ async function checkServer() {
         socket.on('close', function() {
             const val = db.get('servers').find({ name: server.name }).value();
 
-            console.log(val.status);
-            console.log(status);
-
             if (val.status !== status) {
                 db.get('servers').find({ name: server.name }).assign({ status }).write();
-                console.log('>> send webhook/notification here ...');
+                console.log('> Sending notification ...');
+
+                axios.get(`https://alriftech.com/api/v2/bot/aisha/server_update/${server.name.toLowerCase()}`)
+                    .then((res) => true );
             }
 
             console.log('Closed!');

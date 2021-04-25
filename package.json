@@ -7,6 +7,7 @@
         "start": "node index.js"
     },
     "dependencies": {
+        "lowdb": "^1.0.0",
         "net": "^1.0.2"
     }
 }

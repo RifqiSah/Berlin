@@ -3,6 +3,10 @@
     {
       "name": "SEA",
       "status": 1
+    },
+    {
+      "name": "NA",
+      "status": 1
     }
   ]
 }

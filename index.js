@@ -56,7 +56,7 @@ async function checkServer() {
                         .then((res) => true )
                         .catch(function (error) {
                             console.error(error);
-                          })
+                        });
                 }
 
                 console.log(`[${server.name}] Closed!`);

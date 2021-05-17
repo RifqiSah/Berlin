@@ -17,7 +17,7 @@ async function checkServer() {
             const server = servers[i];
 
             const socket = new Socket();
-            socket.setTimeout(5000);
+            socket.setTimeout(15000);
 
             db.read();
             let status = 0;

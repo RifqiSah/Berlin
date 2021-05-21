@@ -2,11 +2,18 @@
   "servers": [
     {
       "name": "SEA",
-      "status": 1
+      "status": 1,
+      "try": 0
     },
     {
       "name": "NA",
-      "status": 1
+      "status": 1,
+      "try": 0
+    },
+    {
+      "name": "KO",
+      "status": 1,
+      "try": 0
     }
   ]
 }

@@ -24,7 +24,7 @@ const servers = [
     { name: "KO", ip: "211.56.89.201", port: 14300 },
 ];
 
-// max percobaan ( n + 1 )
+// max percobaan ( n - 1 )
 const maxTry = 4;
 
 async function checkServer() {
@@ -39,7 +39,7 @@ async function checkServer() {
             db.read();
             let status = 0;
 
-            console.log(`[${server.name}] Connecting to ${server.ip}`);
+            console.log(`[${server.name}] Connecting to ${server.ip}:${server.port}`);
             socket.connect(server.port, server.ip, function() {
                 console.log(`[${server.name}] Connected!`);
             });
@@ -105,4 +105,4 @@ initDb = () => {
 };
 
 initDb();
-setInterval(checkServer, 30000);
+setInterval(checkServer, 60000);

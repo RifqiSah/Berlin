@@ -1,13 +1,13 @@
 FROM node:current-alpine
 
-ENV NODE_ENV=production
+ENV NODE_ENV=production \
+    TZ=Asia/Jakarta
 
 RUN mkdir /app
 WORKDIR /app
 
-# RUN apk add --update sqlite && rm -rf /var/cache/apk/*
-# RUN mkdir db
-# RUN sqlite3 db/berlin.db "VACUUM;"
+RUN apk add tzdata \
+    && rm -rf /var/cache/apk/*
 
 COPY package.json package-lock.json ./
 RUN npm install --production

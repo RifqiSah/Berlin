@@ -72,11 +72,13 @@ async function checkServer() {
 
                     // cek x kali percobaan, apakah benar-benar down atau tidak
                     if (val.try >= maxTry) {
-                        db.get('servers').find({ name: server.name }).assign({ try: 0, status }).write();
                         console.log(`[${server.name}] > Sending notification ...`);
 
                         axios.get(`${process.env.AISHA_API}/server_update/${server.name.toLowerCase()}`)
-                            .then((res) => true )
+                            .then((res) => {
+                                db.get('servers').find({ name: server.name }).assign({ try: 0, status }).write();
+                                return true;
+                            })
                             .catch(function (error) {
                                 console.error(error);
                             });

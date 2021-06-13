@@ -6,6 +6,8 @@ const FileSync = require('lowdb/adapters/FileSync');
 const adapter = new FileSync('./db/servers.json');
 const db = low(adapter);
 
+const { logger } = require("./utils/logger");
+
 // daftar server
 const servers = [
     // SOUTHEAST_ASIA
@@ -34,31 +36,31 @@ async function checkServer() {
 
             // init socket
             const socket = new Socket();
-            socket.setTimeout(10000);
+            socket.setTimeout(20000);
 
             db.read();
             let status = 0;
 
-            console.log(`[${server.name}] Connecting to ${server.ip}:${server.port}`);
+            logger.info(`[${server.name}] Connecting to ${server.ip}:${server.port}`);
             socket.connect(server.port, server.ip, function() {
-                console.log(`[${server.name}] Connected!`);
+                // logger.info(`[${server.name}] Connected!`);
             });
 
             socket.on('data', function(data) {
-                // console.log(`[${server.name}] Received: ${data}`);
-                console.log(`[${server.name}] Server is UP!`);
+                // logger.info(`[${server.name}] Received: ${data}`);
+                logger.info(`[${server.name}] Server is UP!`);
                 status = 1;
 
                 socket.destroy();
             });
 
             socket.on('error', (err) => {
-                console.log(`[${server.name}] Server is DOWN!`);
+                logger.warn(`[${server.name}] Server is DOWN!`);
                 status = 0;
             })
 
             socket.on('timeout', () => {
-                console.log(`[${server.name}] Server is TIMEOUT!`);
+                logger.warn(`[${server.name}] Server is TIMEOUT!`);
                 socket.destroy();
             });
 
@@ -68,11 +70,11 @@ async function checkServer() {
                 if (val.status !== status) {
                     // tambah percobaan
                     db.get('servers').find({ name: server.name }).update('try', n => n + 1).write()
-                    console.log(`[${server.name}] Check attemp: ${Number(val.try) + 1}`);
+                    logger.info(`[${server.name}] Check attemp: ${Number(val.try) + 1}`);
 
                     // cek x kali percobaan, apakah benar-benar down atau tidak
                     if (val.try >= maxTry) {
-                        console.log(`[${server.name}] > Sending notification ...`);
+                        logger.info(`[${server.name}] > Sending notification ...`);
 
                         axios.get(`${process.env.AISHA_API}/server_update/${server.name.toLowerCase()}`)
                             .then((res) => {
@@ -80,13 +82,13 @@ async function checkServer() {
                                 return true;
                             })
                             .catch(function (error) {
-                                console.error(error);
+                                logger.error(error);
                             });
                     }
                 }
 
-                console.log(`[${server.name}] Closed!`);
-                console.log(' ');
+                logger.info(`[${server.name}] Closed!`);
+                logger.info(' ');
 
                 resolve();
             });

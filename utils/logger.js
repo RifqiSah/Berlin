@@ -1,4 +1,4 @@
-const path, { resolve } = require("path");
+const { join, resolve } = require("path");
 const { createLogger, format, transports } = require('winston');
 
 const logFormat = format.printf((info) => `${info.timestamp} - ${info.level}: ${info.message}`);
@@ -21,7 +21,7 @@ const logger = createLogger({
 
         // Logging info and up to file
         new transports.File({
-            filename: path.join(resolve(__dirname, '../logs'), 'full.log'),
+            filename: join(resolve(__dirname, '../logs'), 'full.log'),
             level: 'info',
             format: logFormat,
             options: { flags: 'w' }
@@ -29,7 +29,7 @@ const logger = createLogger({
 
         // Logging only errors to file
         new transports.File({
-            filename: path.join(resolve(__dirname, '../logs'), 'error.log'),
+            filename: join(resolve(__dirname, '../logs'), 'error.log'),
             level: 'error',
             format: logFormat,
             options: { flags: 'w' }

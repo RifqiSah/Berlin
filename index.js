@@ -27,7 +27,7 @@ const servers = [
 ];
 
 // max percobaan ( n - 1 )
-const maxTry = 4;
+const maxTry = 9;
 
 async function checkServer() {
     for (let i = 0; i < servers.length; i++) {
@@ -36,7 +36,7 @@ async function checkServer() {
 
             // init socket
             const socket = new Socket();
-            socket.setTimeout(20000);
+            socket.setTimeout(30000);
 
             db.read();
             let status = 0;

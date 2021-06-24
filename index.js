@@ -27,7 +27,7 @@ const servers = [
 ];
 
 // max percobaan ( n - 1 )
-const maxTry = 9;
+const maxTry = 4;
 
 async function checkServer() {
     for (let i = 0; i < servers.length; i++) {
@@ -36,7 +36,7 @@ async function checkServer() {
 
             // init socket
             const socket = new Socket();
-            socket.setTimeout(30000);
+            socket.setTimeout(20000);
 
             db.read();
             let status = 0;
@@ -85,6 +85,8 @@ async function checkServer() {
                                 logger.error(error);
                             });
                     }
+                } else {
+                    db.get('servers').find({ name: server.name }).assign({ try: 0 }).write();
                 }
 
                 logger.info(`[${server.name}] Closed!`);

@@ -11,19 +11,19 @@ const { logger } = require("./utils/logger");
 // daftar server
 const servers = [
     // SOUTHEAST_ASIA
-    { name: "SEA", ip: "13.76.128.50", port: 14301 },
-    { name: "SEA", ip: "13.76.135.145", port: 14301 },
-    { name: "SEA", ip: "52.230.66.176", port: 14301 },
+    { id: 1, name: "SEA", ip: "13.76.128.50", port: 14301 },
+    { id: 2, name: "SEA", ip: "13.76.135.145", port: 14301 },
+    { id: 3, name: "SEA", ip: "52.230.66.176", port: 14301 },
 
     // NORTH_AMERICA
-    { name: "NA", ip: "110.234.17.5", port: 14300 },
-    { name: "NA", ip: "110.234.17.5", port: 14301 },
-    { name: "NA", ip: "110.234.17.51", port: 14300 },
-    { name: "NA", ip: "110.234.17.51", port: 14301 },
+    { id: 11, name: "NA", ip: "110.234.17.5", port: 14300 },
+    { id: 12, name: "NA", ip: "110.234.17.5", port: 14301 },
+    { id: 13, name: "NA", ip: "110.234.17.51", port: 14300 },
+    { id: 14, name: "NA", ip: "110.234.17.51", port: 14301 },
 
     // KOREA
-    { name: "KO", ip: "211.56.89.200", port: 14300 },
-    { name: "KO", ip: "211.56.89.201", port: 14300 },
+    { id: 21, name: "KO", ip: "211.56.89.200", port: 14300 },
+    { id: 22, name: "KO", ip: "211.56.89.201", port: 14300 },
 ];
 
 // max percobaan ( n - 1 )
@@ -36,7 +36,7 @@ async function checkServer() {
 
             // init socket
             const socket = new Socket();
-            socket.setTimeout(20000);
+            socket.setTimeout(1000 * 10);
 
             db.read();
             let status = 0;
@@ -111,4 +111,4 @@ initDb = () => {
 };
 
 initDb();
-setInterval(checkServer, 60000);
+setInterval(checkServer, 1000 * 60 * 2);

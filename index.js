@@ -36,7 +36,7 @@ async function checkServer() {
 
             // init socket
             const socket = new Socket();
-            socket.setTimeout(1000 * 10);
+            socket.setTimeout(1000 * 25);
 
             db.read();
             let status = 0;

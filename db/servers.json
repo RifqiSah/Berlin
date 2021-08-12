@@ -1,19 +1,20 @@
-{
-  "servers": [
+[
     {
-      "name": "SEA",
-      "status": 1,
-      "try": 0
+      "id":1,
+      "name":"SEA",
+      "ip":"13.76.128.50",
+      "port":14301
     },
     {
-      "name": "NA",
-      "status": 1,
-      "try": 0
+      "id":2,
+      "name":"SEA",
+      "ip":"13.76.135.145",
+      "port":14301
     },
     {
-      "name": "KO",
-      "status": 1,
-      "try": 0
+      "id":3,
+      "name":"SEA",
+      "ip":"52.230.66.176",
+      "port":14301
     }
-  ]
-}
+]

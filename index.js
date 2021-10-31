@@ -58,7 +58,7 @@ async function checkServer() {
                     logger.info(`[${server.name}] Check attemp: ${Number(val.try) + 1}`);
 
                     // cek x kali percobaan, apakah benar-benar down atau tidak
-                    if (val.try >= maxTry) {
+                    if (val.try >= maxTry || status === 1) {
                         logger.info(`[${server.name}] > Sending notification ...`);
 
                         axios.get(`${process.env.AISHA_API}/server_update/${server.name.toLowerCase()}`)
@@ -96,4 +96,4 @@ initDb = () => {
 };
 
 initDb();
-setInterval(checkServer, 1000 * 60 * 2);
+setInterval(checkServer, 1000 * 60 * 1);

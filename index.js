@@ -21,7 +21,7 @@ async function checkServer() {
 
             // init socket
             const socket = new Socket();
-            socket.setTimeout(1000 * 25);
+            socket.setTimeout(1000 * 15);
 
             db.read();
             let status = 0;
@@ -96,4 +96,6 @@ initDb = () => {
 };
 
 initDb();
+
+checkServer();
 setInterval(checkServer, 1000 * 60 * 1);

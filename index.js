@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const { Socket } = require('net');
 const axios = require('axios');
 
@@ -15,6 +17,11 @@ const servers = require("./db/servers.json");
 const maxTry = 4;
 
 async function checkServer() {
+    if (process.env.DISABLE === "true") {
+        logger.warn('Server check is disabled');
+        return false;
+    }
+
     for (let i = 0; i < servers.length; i++) {
         await new Promise((resolve, reject) => {
             const server = servers[i];

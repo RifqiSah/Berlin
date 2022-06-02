@@ -14,7 +14,7 @@ const { logger } = require("./utils/logger");
 const servers = require("./db/servers.json");
 
 // max percobaan ( n - 1 )
-const maxTry = 4;
+const maxTry = 5;
 
 async function checkServer() {
     if (process.env.DISABLE === "true") {
@@ -23,6 +23,8 @@ async function checkServer() {
     }
 
     for (let i = 0; i < servers.length; i++) {
+        db.read();
+
         await new Promise((resolve, reject) => {
             const server = servers[i];
 
@@ -30,7 +32,6 @@ async function checkServer() {
             const socket = new Socket();
             socket.setTimeout(1000 * 15);
 
-            db.read();
             let status = 0;
 
             logger.info(`[${server.name}] Connecting to ${server.ip}:${server.port}`);
@@ -62,7 +63,7 @@ async function checkServer() {
                 if (val.status !== status) {
                     // tambah percobaan
                     db.get('servers').find({ name: server.name }).update('try', n => n + 1).write()
-                    logger.info(`[${server.name}] Check attemp: ${Number(val.try) + 1}`);
+                    logger.info(`[${server.name}] Check attemp: ${Number(val.try)}`);
 
                     // cek x kali percobaan, apakah benar-benar down atau tidak
                     if (val.try >= maxTry || status === 1) {

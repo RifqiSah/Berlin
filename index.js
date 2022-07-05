@@ -57,7 +57,7 @@ async function checkServer() {
                 socket.destroy();
             });
 
-            socket.on('close', function() {
+            socket.on('close', async function() {
                 const val = db.get('servers').find({ name: server.name }).value();
 
                 if (val.status !== status) {

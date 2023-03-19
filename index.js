@@ -69,7 +69,11 @@ async function checkServer() {
                     if (val.try >= maxTry || status === 1) {
                         logger.info(`[${server.name}] > Sending notification ...`);
 
-                        await axios.get(`${process.env.AISHA_API}/server_update/${server.name.toLowerCase()}`)
+                        await axios.get(`${process.env.AISHA_API}/server_update/${server.name.toLowerCase()}`, {
+                            headers: {
+                                apikey: process.env.API_KEY,
+                            },
+                        })
                             .then((res) => {
                                 db.get('servers').find({ name: server.name }).assign({ try: 0, status }).write();
                                 return true;
